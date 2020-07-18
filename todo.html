@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Todo App</title>
+    <meta name="description" content="Todo App" />
+    <meta name="author" content="Ramon" />
+  </head>
+
+  <body>
+    <h1>Dit is een todo APP</h1>
+    <input type="text" id="searchtodo" placeholder="Zoek een todo" />
+
+    <div id="todos"></div>
+    <form id="addtodo">
+      <input type="text" id="newtodo" placeholder="Voer Todo in" name="text" />
+      <button id="todobutton">Add Todo</button>
+    </form>
+
+    <label> <input type="checkbox" id="hidecompleted" /> Hide completed </label>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment-with-locales.min.js"></script>
+    <script src="uuidv4.js"></script>
+    <script src="todo-functions.js"></script>
+    <script src="todo-app.js"></script>
+  </body>
+</html>
