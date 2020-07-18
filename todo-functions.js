@@ -3,7 +3,7 @@
 // save and render
 
 //Fetch exisiting todos from storage: getSavedTodos
-const getSavedTodos = function () {
+const getSavedTodos = () => {
   const todosJSON = localStorage.getItem("todos");
   if (todosJSON !== null) {
     return JSON.parse(todosJSON);
@@ -13,16 +13,14 @@ const getSavedTodos = function () {
 };
 //save todos localstorage: saveTodos
 
-const saveTodos = function (todos) {
+const saveTodos = (todos) => {
   localStorage.setItem("todos", JSON.stringify(todos));
 };
 
 // Je gebruikt hier findIndex omdat je moet splitten bij de index. Niet de waarde
-const removeTodo = function (id) {
+const removeTodo = (id) => {
   // vind index van de todo. returned true of false
-  const todoIndex = todos.findIndex(function (todo) {
-    return todo.id === id;
-  });
+  const todoIndex = todos.findIndex((todo) => todo.id === id);
   // als true, verwijder de todo. DIT IS NIET EENS NODIG!
   if (todoIndex > -1) {
     todos.splice(todoIndex, 1);
@@ -31,10 +29,8 @@ const removeTodo = function (id) {
 
 // Hier gebruik je find, omdat je een waarde wilt aanpassen, niet een index weghalen.
 // Hoe werkt die ID check?
-const toggleTodo = function (id) {
-  const todo = todos.find(function (todo) {
-    return todo.id === id;
-  });
+const toggleTodo = (id) => {
+  const todo = todos.find((todo) => todo.id === id);
 
   if (todo !== undefined) {
     // dit is de flip. Op basis van todo, welke een functie is de de specifieke todo selecteerd. Hij returned de ID.
@@ -43,9 +39,9 @@ const toggleTodo = function (id) {
 };
 
 //renderTodos
-const renderTodos = function (todos, filters) {
+const renderTodos = (todos, filters) => {
   //check of de indiv todo text matched met de filter input
-  let filteredTodos = todos.filter(function (todo) {
+  let filteredTodos = todos.filter((todo) => {
     const searchTextMatch = todo.text.toLowerCase().includes(filters.searchText.toLowerCase());
     // return als hideCompleted filter false is (dus niet gechecked). Of als de todo compled false is.
     const hideCompletedMatch = !filters.hideCompleted || !todo.completed;
@@ -53,9 +49,7 @@ const renderTodos = function (todos, filters) {
   });
 
   // op basis van zoekfilter (filtereredTodos), kijk welke completed zijn.
-  const incompleteTodos = filteredTodos.filter(function (todo) {
-    return !todo.completed;
-  });
+  const incompleteTodos = filteredTodos.filter((todo) => !todo.completed);
 
   // clear todos div
   document.querySelector("#todos").innerHTML = "";
@@ -64,13 +58,13 @@ const renderTodos = function (todos, filters) {
   document.querySelector("#todos").appendChild(generateSummaryDom(incompleteTodos));
 
   // maak een p voor elk element dat gefiltered is.
-  filteredTodos.forEach(function (todo) {
+  filteredTodos.forEach((todo) => {
     document.querySelector("#todos").appendChild(generateTodoDom(todo));
   });
 };
 
 // generateTodoDom
-const generateTodoDom = function (todo) {
+const generateTodoDom = (todo) => {
   // setup container div
   const todoContainer = document.createElement("div");
 
@@ -80,7 +74,7 @@ const generateTodoDom = function (todo) {
   checkbox.checked = todo.completed;
   checkbox.setAttribute("type", "checkbox");
 
-  checkbox.addEventListener("change", function () {
+  checkbox.addEventListener("change", () => {
     toggleTodo(todo.id);
     saveTodos(todos);
     renderTodos(todos, filters);
@@ -96,7 +90,7 @@ const generateTodoDom = function (todo) {
   const removeButton = document.createElement("button");
   removeButton.textContent = "x";
   todoContainer.appendChild(removeButton);
-  removeButton.addEventListener("click", function () {
+  removeButton.addEventListener("click", () => {
     removeTodo(todo.id);
     saveTodos(todos);
     renderTodos(todos, filters);
@@ -105,7 +99,7 @@ const generateTodoDom = function (todo) {
   return todoContainer;
 };
 
-const generateSummaryDom = function (incompleteTodos) {
+const generateSummaryDom = (incompleteTodos) => {
   const introParagraph = document.createElement("h2");
   introParagraph.textContent = `You have ${incompleteTodos.length} todo's left`;
   return introParagraph;

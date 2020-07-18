@@ -13,12 +13,12 @@ const filters = {
 renderTodos(todos, filters);
 
 // luister en assign de input aan filters.searchText. Render opnieuw tijdens het luisteren.
-document.querySelector("#searchtodo").addEventListener("input", function (e) {
+document.querySelector("#searchtodo").addEventListener("input", (e) => {
   filters.searchText = e.target.value;
   renderTodos(todos, filters);
 });
 
-document.querySelector("#addtodo").addEventListener("submit", function (e) {
+document.querySelector("#addtodo").addEventListener("submit", (e) => {
   e.preventDefault();
   // push nieuw object naar array.
   todos.push({
@@ -34,8 +34,7 @@ document.querySelector("#addtodo").addEventListener("submit", function (e) {
   e.target.elements.text.value = "";
 });
 
-document.querySelector("#hidecompleted").addEventListener("change", function (e) {
+document.querySelector("#hidecompleted").addEventListener("change", (e) => {
   filters.hideCompleted = e.target.checked;
   renderTodos(todos, filters);
 });
-
