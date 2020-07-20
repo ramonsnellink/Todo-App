@@ -5,11 +5,7 @@
 //Fetch exisiting todos from storage: getSavedTodos
 const getSavedTodos = () => {
   const todosJSON = localStorage.getItem("todos");
-  if (todosJSON !== null) {
-    return JSON.parse(todosJSON);
-  } else {
-    return [];
-  }
+  return todosJSON ? JSON.parse(todosJSON) : [];
 };
 //save todos localstorage: saveTodos
 
@@ -32,7 +28,8 @@ const removeTodo = (id) => {
 const toggleTodo = (id) => {
   const todo = todos.find((todo) => todo.id === id);
 
-  if (todo !== undefined) {
+  // CHECK
+  if (todo) {
     // dit is de flip. Op basis van todo, welke een functie is de de specifieke todo selecteerd. Hij returned de ID.
     todo.completed = !todo.completed;
   }
