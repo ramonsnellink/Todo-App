@@ -1,3 +1,5 @@
+"use strict";
+
 // add event handler to checkbox
 // modify correct objects completed property -> toggleTodo (id)
 // save and render
@@ -5,7 +7,12 @@
 //Fetch exisiting todos from storage: getSavedTodos
 const getSavedTodos = () => {
   const todosJSON = localStorage.getItem("todos");
-  return todosJSON ? JSON.parse(todosJSON) : [];
+  // kijk of er correcte data is, zo niet, return een lege string. Als er foutieve data is, return ook een lege string.
+  try {
+    return todosJSON ? JSON.parse(todosJSON) : [];
+  } catch (e) {
+    return [];
+  }
 };
 //save todos localstorage: saveTodos
 

@@ -1,3 +1,5 @@
+"use strict";
+
 // remove paragraphs met de text "zeker"
 let todos = getSavedTodos();
 
