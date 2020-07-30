@@ -1,9 +1,5 @@
 "use strict";
 
-// add event handler to checkbox
-// modify correct objects completed property -> toggleTodo (id)
-// save and render
-
 //Fetch exisiting todos from storage: getSavedTodos
 const getSavedTodos = () => {
   const todosJSON = localStorage.getItem("todos");
@@ -44,6 +40,8 @@ const toggleTodo = (id) => {
 
 //renderTodos
 const renderTodos = (todos, filters) => {
+  const todoEl = document.querySelector("#todos");
+
   //check of de indiv todo text matched met de filter input
   let filteredTodos = todos.filter((todo) => {
     const searchTextMatch = todo.text.toLowerCase().includes(filters.searchText.toLowerCase());
@@ -56,25 +54,35 @@ const renderTodos = (todos, filters) => {
   const incompleteTodos = filteredTodos.filter((todo) => !todo.completed);
 
   // clear todos div
-  document.querySelector("#todos").innerHTML = "";
+  todoEl.innerHTML = "";
 
   // maak h2 met aantal van todos die gedaan moeten worden (.length)
-  document.querySelector("#todos").appendChild(generateSummaryDom(incompleteTodos));
+  todoEl.appendChild(generateSummaryDom(incompleteTodos));
 
-  // maak een p voor elk element dat gefiltered is.
-  filteredTodos.forEach((todo) => {
-    document.querySelector("#todos").appendChild(generateTodoDom(todo));
-  });
+  // maak een p voor elk element dat gefiltered is. Als er geen todos zijn om te laten zien, laat dan een message zien.
+  if (filteredTodos.length > 0) {
+    filteredTodos.forEach((todo) => {
+      todoEl.appendChild(generateTodoDom(todo));
+    });
+  } else {
+    const messageEl = document.createElement("p");
+    messageEl.classList.add("empty-message");
+    messageEl.textContent = "No Todo's to show";
+    todoEl.appendChild(messageEl);
+  }
 };
 
 // generateTodoDom
 const generateTodoDom = (todo) => {
   // setup container div
-  const todoContainer = document.createElement("div");
+  const todoEl = document.createElement("label");
+  const containerEl = document.createElement("div");
+  const checkbox = document.createElement("input");
+  const todoSpan = document.createElement("span");
+  const removeButton = document.createElement("button");
 
   // setup checkbox
 
-  const checkbox = document.createElement("input");
   checkbox.checked = todo.completed;
   checkbox.setAttribute("type", "checkbox");
 
@@ -84,27 +92,40 @@ const generateTodoDom = (todo) => {
     renderTodos(todos, filters);
   });
 
-  todoContainer.appendChild(checkbox);
+  containerEl.appendChild(checkbox);
 
   // setup span for todo text
-  const todoSpan = document.createElement("span");
   todoSpan.textContent = todo.text;
-  todoContainer.appendChild(todoSpan);
+  containerEl.appendChild(todoSpan);
 
-  const removeButton = document.createElement("button");
-  removeButton.textContent = "x";
-  todoContainer.appendChild(removeButton);
+  todoEl.classList.add("list-item");
+  containerEl.classList.add("list-item__container");
+
+  todoEl.appendChild(containerEl);
+
+  removeButton.classList.add("button", "button--text");
+  removeButton.textContent = "remove";
+  todoEl.appendChild(removeButton);
   removeButton.addEventListener("click", () => {
     removeTodo(todo.id);
     saveTodos(todos);
     renderTodos(todos, filters);
   });
 
-  return todoContainer;
+  return todoEl;
 };
 
 const generateSummaryDom = (incompleteTodos) => {
   const introParagraph = document.createElement("h2");
-  introParagraph.textContent = `You have ${incompleteTodos.length} todo's left`;
+  introParagraph.classList.add("list-title");
+  if (incompleteTodos.length > 1) {
+    introParagraph.textContent = `You have ${incompleteTodos.length} todo's left`;
+  } else {
+    introParagraph.textContent = `You have ${incompleteTodos.length} todo left`;
+  }
+
   return introParagraph;
 };
+
+//add list-title class
+// als je 1 todo hebt dan enkel, anders meervoud.
