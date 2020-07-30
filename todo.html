@@ -6,22 +6,35 @@
     <title>Todo App</title>
     <meta name="description" content="Todo App" />
     <meta name="author" content="Ramon" />
+    <link href="./styles/styles.css" rel="stylesheet" />
   </head>
 
   <body>
-    <h1>Dit is een todo APP</h1>
-    <input type="text" id="searchtodo" placeholder="Zoek een todo" />
+    <div class="header">
+      <div class="container">
+        <h1 class="header__title">Todo APP</h1>
+        <h2 class="header__subtitle">What do you need to do?</h2>
+      </div>
+    </div>
 
-    <div id="todos"></div>
-    <form id="addtodo">
-      <input type="text" id="newtodo" placeholder="Voer Todo in" name="text" />
-      <button id="todobutton">Add Todo</button>
-    </form>
+    <div class="actions">
+      <div class="actions__container">
+        <input type="text" class="input" id="searchtodo" placeholder="Zoek een todo" />
+        <label class="checkbox"> <input type="checkbox" id="hidecompleted" /> Hide completed </label>
+      </div>
+    </div>
 
-    <label> <input type="checkbox" id="hidecompleted" /> Hide completed </label>
+    <div class="container">
+      <div id="todos"></div>
+      <form id="addtodo">
+        <input class="input" type="text" id="newtodo" placeholder="Voer Todo in" name="text" />
+        <button class="button" id="todobutton">Add Todo</button>
+      </form>
+    </div>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment-with-locales.min.js"></script>
-    <script src="uuidv4.js"></script>
-    <script src="todo-functions.js"></script>
-    <script src="todo-app.js"></script>
+    <script src="./scripts/uuidv4.js"></script>
+    <script src="./scripts/todo-functions.js"></script>
+    <script src="./scripts/todo-app.js"></script>
   </body>
 </html>

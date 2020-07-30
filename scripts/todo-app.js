@@ -20,20 +20,27 @@ document.querySelector("#searchtodo").addEventListener("input", (e) => {
   renderTodos(todos, filters);
 });
 
+//get a trimmed version of the input (spaties weg)
+// only add a todo if it has content (length > 0)
+
 document.querySelector("#addtodo").addEventListener("submit", (e) => {
   e.preventDefault();
-  // push nieuw object naar array.
-  todos.push({
-    id: uuidv4(),
-    text: e.target.elements.text.value,
-    completed: false,
-  });
 
-  saveTodos(todos);
-  // render opnieuw
-  renderTodos(todos, filters);
-  //clear value
-  e.target.elements.text.value = "";
+  const text = e.target.elements.text.value.trim();
+  if (text.length > 0) {
+    // push nieuw object naar array.
+    todos.push({
+      id: uuidv4(),
+      text,
+      completed: false,
+    });
+
+    saveTodos(todos);
+    // render opnieuw
+    renderTodos(todos, filters);
+    //clear value
+    e.target.elements.text.value = "";
+  }
 });
 
 document.querySelector("#hidecompleted").addEventListener("change", (e) => {
